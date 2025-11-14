@@ -1,0 +1,22 @@
+.field {
+  margin-bottom: 20px;
+}
+
+.field input {
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.field input::placeholder {
+  color: #aaa;
+}
+
+.field input:focus {
+  border-bottom-color: #3f2de2;
+}
