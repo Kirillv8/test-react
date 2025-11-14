@@ -1,0 +1,18 @@
+.containerForm {
+  border: 1px solid black;
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 400px;
+  padding: 50px;
+  background: #852321;
+  background: linear-gradient(to right, #1f223d, #3d1f3d);
+  border-radius: 40px;
+}
+
+.containerForm h3 {
+  text-align: center;
+}
