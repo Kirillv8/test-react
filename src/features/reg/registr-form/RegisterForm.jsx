@@ -21,6 +21,10 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log(`Пользователь успешно зарегистрирован.
+     Login: ${login}
+     Password: ${password}
+     Confirm: ${confirmPassword}`);
   };
   return (
     <>
