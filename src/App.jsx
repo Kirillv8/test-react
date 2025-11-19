@@ -1,8 +1,9 @@
-import LoginForm from "@features/auth/login-form/LoginForm";
+import AuthModal from "@widgets/autth/AuthModal";
+
 function App() {
   return (
     <>
-      <LoginForm />
+      <AuthModal />
     </>
   );
 }
