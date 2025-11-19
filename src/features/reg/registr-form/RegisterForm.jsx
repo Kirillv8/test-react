@@ -2,32 +2,35 @@ import { useState } from "react";
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleChangeName = (e) => {
+  const handleChangeLogin = (e) => {
     setLogin(e.target.value);
   };
+
   const handleChangePassword = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Login submited ${login} ${password}`);
+  const handleConfirmPassword = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
-      {" "}
+      <h3 style={{ color: "white", textAlign: "center" }}>Registration Form</h3>
       <form onSubmit={handleSubmit}>
-        <h3 style={{ color: "white", textAlign: "center" }}>Login Form</h3>
         <Input
           type="text"
-          placeholder={"Username"}
+          placeholder={"User email"}
           value={login}
-          onChange={handleChangeName}
+          onChange={handleChangeLogin}
         />
         <Input
           type="password"
@@ -35,10 +38,16 @@ const LoginForm = () => {
           value={password}
           onChange={handleChangePassword}
         />
-        <Button children={"LOGIN"} type="submit" />
+        <Input
+          type="password"
+          placeholder={"Confirm your password"}
+          value={confirmPassword}
+          onChange={handleConfirmPassword}
+        />
+        <Button children={"Registration"} type="submit" />
       </form>
     </>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
