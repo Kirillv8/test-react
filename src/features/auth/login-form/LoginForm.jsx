@@ -15,7 +15,9 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`Login submited ${login} ${password}`);
+    console.log(`Пользователь успешно зарегистрирован.
+     Login: ${login}
+     Password: ${password}`);
   };
 
   return (
