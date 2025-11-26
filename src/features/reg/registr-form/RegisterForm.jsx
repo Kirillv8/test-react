@@ -3,28 +3,26 @@ import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
 
 const RegisterForm = () => {
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const handleChangeLogin = (e) => {
-    setLogin(e.target.value);
-  };
-
-  const handleChangePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials((prevCredentials) => ({
+      ...prevCredentials,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(`Пользователь успешно зарегистрирован.
-     Login: ${login}
-     Password: ${password}
-     Confirm: ${confirmPassword}`);
+     Login: ${credentials.email}
+     Password: ${credentials.password}
+     Confirm: ${credentials.confirmPassword}`);
   };
   return (
     <>
@@ -32,21 +30,30 @@ const RegisterForm = () => {
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
+          name="email"
           placeholder={"User email"}
-          value={login}
-          onChange={handleChangeLogin}
+          value={credentials.email}
+          onChange={(e) => {
+            handleChange(e);
+          }}
         />
         <Input
           type="password"
+          name="password"
           placeholder={"Password"}
-          value={password}
-          onChange={handleChangePassword}
+          value={credentials.password}
+          onChange={(e) => {
+            handleChange(e);
+          }}
         />
         <Input
           type="password"
+          name="confirmPassword"
           placeholder={"Confirm your password"}
-          value={confirmPassword}
-          onChange={handleConfirmPassword}
+          value={credentials.confirmPassword}
+          onChange={(e) => {
+            handleChange(e);
+          }}
         />
         <Button children={"Registration"} type="submit" />
       </form>
