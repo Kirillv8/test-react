@@ -1,5 +1,6 @@
 import React from "react";
 import "@src/shared/ui/input/input.css";
+
 const Input = ({ type = "text", placeholder, value, onChange, ...props }) => {
   return (
     <div className="field">
