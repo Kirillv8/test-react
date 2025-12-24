@@ -2,20 +2,20 @@
   margin-top: 5px;
   display: flex;
   justify-content: space-between;
-  border: 1px, solid, wheat;
+  border: 1px solid wheat;
 }
 
 .header-logo {
-  margin-left: 10px;
+  margin-left: 25px;
 }
 
 .header-logo-btn {
-  margin-right: 10px;
+  margin-right: 25px;
   margin-top: 10px;
-  width: 100px;
-  height: 40px;
-  color: aliceblue;
-  padding: 12px 24px;
+  margin-bottom: 25px;
+  width: 150px;
+  height: 60px;
+  padding: 12px 12px;
   background-color: #4caf50;
   color: white;
   border: none;
