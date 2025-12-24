@@ -1,0 +1,15 @@
+.container-pagination-btn {
+  display: flex;
+  gap: 5px;
+}
+
+.pagination-btn {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  padding: 0;
+}
+
+.pagination-btn.active {
+  background-color: gray;
+}
