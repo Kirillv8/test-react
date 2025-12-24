@@ -1,12 +1,17 @@
 import React from "react";
 import "@shared/ui/button/button.css";
-const Button = ({ type = "submit", onClick, children, ...props }) => {
+const Button = ({ type, onClick, children, className = "", ...props }) => {
   return (
-    <div className="container-btn">
-      <button className="btn" type={type} onClick={onClick} {...props}>
+    <>
+      <button
+        className={`btn ${className}`}
+        type={type}
+        onClick={onClick}
+        {...props}
+      >
         {children}
       </button>
-    </div>
+    </>
   );
 };
 
