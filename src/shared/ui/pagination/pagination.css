@@ -1,6 +1,7 @@
 .container-pagination-btn {
   display: flex;
   gap: 5px;
+  justify-content: flex-start;
 }
 
 .pagination-btn {
