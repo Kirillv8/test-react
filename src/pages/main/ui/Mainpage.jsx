@@ -1,9 +1,21 @@
 import Header from "@widgets/header/ui/Header";
 import Filters from "@widgets/filters/ui/Filters";
 import Pagination from "@shared/ui/pagination/Pagination";
-
 import "@pages/main/ui/mainPage.css";
+
+// import { useEffect } from "react";
+// import { genres } from "@shared/api/genres.js";
+
 const MainPage = () => {
+  // useEffect(() => {
+  //   genres()
+  //     .then((data) => {
+  //       console.log("Получены данные", data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Промис отработал с ошибкой", error);
+  //     });
+  // }, []);
   return (
     <div className="main-page">
       <Header />
