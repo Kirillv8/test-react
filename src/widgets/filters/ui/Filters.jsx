@@ -1,23 +1,30 @@
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "@src/widgets/filters/ui/filter.css";
-const Filters = () => {
-  const [popularity, setPopularity] = useState([
-    "Терминатор",
-    "Приключение шурика",
-    "The Matrix",
-  ]);
+import { getGenresApi } from "@shared/api/genres.js";
 
-  const [rating, setRating] = useState([
-    "Терминатор",
-    "Приключение шурика",
-    "The Matrix",
-  ]);
+const Filters = () => {
+  const [genres, setGenres] = useState([]);
+
+  const [popularity, setPopularity] = useState("");
+
+  const [rating, setRating] = useState("");
+  useEffect(() => {
+    try {
+      const getGenres = async () => {
+        const data = await getGenresApi();
+        setGenres(data.genres);
+      };
+      getGenres();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   return (
     <>
-      <aside className="filters">   
+      <aside className="filters">
         <div className="filters__header">
           <h2>Фильтры</h2>
           <Button className="btn">X</Button>
@@ -45,19 +52,32 @@ const Filters = () => {
         </div>
         <div className="filters__section">
           <h2>Жанры</h2>
-          <br />
-          <label>
-            <Input type="checkbox" />
-            Комедия
-          </label>
-          <label>
-            <Input type="checkbox" />
-            Боевик
-          </label>
-          <label>
-            <Input type="checkbox" />
-            Драма
-          </label>
+          <div
+            className="genres-list"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              marginTop: "10px",
+            }}
+          >
+            {genres.map((genre) => (
+              <label
+                key={genre.id}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  cursor: "pointer",
+                }}
+              >
+                <Input type="checkbox" />
+                <span style={{ color: "white", fontSize: "14px" }}>
+                  {genre.name}
+                </span>
+              </label>
+            ))}
+          </div>
         </div>
       </aside>
     </>

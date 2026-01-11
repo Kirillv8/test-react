@@ -16,7 +16,7 @@
 
 .field input::placeholder {
   color: #aaa;
-  text-align: center;
+  /* text-align: center; */
 }
 
 .field input:focus {
