@@ -11,15 +11,15 @@ const Filters = () => {
 
   const [rating, setRating] = useState("");
   useEffect(() => {
-    try {
-      const getGenres = async () => {
+    const getGenres = async () => {
+      try {
         const data = await getGenresApi();
         setGenres(data.genres);
-      };
-      getGenres();
-    } catch (error) {
-      console.log(error);
-    }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getGenres();
   }, []);
 
   return (
