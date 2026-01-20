@@ -1,0 +1,38 @@
+.header {
+  margin-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid wheat;
+}
+
+.header-logo {
+  margin-left: 25px;
+}
+
+.header-logo-btn {
+  margin-right: 25px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+  width: 150px;
+  height: 60px;
+  padding: 12px 12px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
+  font-size: 10px;
+}
+
+.header-logo-btn:hover {
+  background-color: #43a047;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transform: scale(1.08);
+}
+
+.header-logo-btn:active {
+  transform: scale(0.95);
+}

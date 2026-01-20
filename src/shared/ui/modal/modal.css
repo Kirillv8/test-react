@@ -1,0 +1,13 @@
+.containerForms {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background: #852321;
+  background: linear-gradient(to right, #1f223d, #3d1f3d);
+  border-radius: 40px;
+  border: 1px solid black;
+  width: 500px;
+  height: 500px;
+}
