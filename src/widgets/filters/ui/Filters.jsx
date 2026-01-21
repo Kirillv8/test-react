@@ -10,16 +10,39 @@ const Filters = () => {
   const [popularity, setPopularity] = useState("");
 
   const [rating, setRating] = useState("");
+
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  const toggle = (id) => {
+    if (!selectedGenres.includes(id)) {
+      setSelectedGenres((prev) => [
+        ...prev,
+        {
+          id: id,
+        },
+      ]);
+      return;
+    }
+    if (selectedGenres.includes(id)) {
+      setSelectedGenres((prev) => prev.filter((item) => item.id !== id));
+    }
+  };
+
+  const handleReset = () => {
+    setSelectedGenres([]);
+  };
+
   useEffect(() => {
-    const getGenres = async () => {
-      try {
+    try {
+      const getGenres = async () => {
         const data = await getGenresApi();
+        console.log(data.genres);
         setGenres(data.genres);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getGenres();
+      };
+      getGenres();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
@@ -27,11 +50,15 @@ const Filters = () => {
       <aside className="filters">
         <div className="filters__header">
           <h2>Фильтры</h2>
-          <Button className="btn">X</Button>
+          <Button className="btn" onClick={handleReset}>
+            X
+          </Button>
         </div>
+
         <div className="filters__section">
           <label>Сортировать по:</label>
-          <br></br>
+          <br />
+          <br />
           <select
             className="filters__select"
             value={popularity}
@@ -40,6 +67,7 @@ const Filters = () => {
             <option value="">По популярности</option>
           </select>
         </div>
+
         <div className="filters__section">
           {" "}
           <select
@@ -50,6 +78,7 @@ const Filters = () => {
             <option value="">По рейтингу</option>
           </select>
         </div>
+
         <div className="filters__section">
           <h2>Жанры</h2>
           <div
@@ -71,7 +100,11 @@ const Filters = () => {
                   cursor: "pointer",
                 }}
               >
-                <Input type="checkbox" />
+                <Input
+                  type="checkbox"
+                  checked={selectedGenres.some((item) => item.id === genre.id)}
+                  onChange={() => toggle(genre.id)}
+                />
                 <span style={{ color: "white", fontSize: "14px" }}>
                   {genre.name}
                 </span>
