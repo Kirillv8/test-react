@@ -1,36 +1,36 @@
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
+import { GenresContext } from "../model/FilterProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
-
   const [popularity, setPopularity] = useState("");
-
   const [rating, setRating] = useState("");
+  const [selectedGenres, dispatch] = useReducer(filterReducer, []);
 
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  // const selectedGenres = useContext(GenresContext);
 
   const toggle = (id) => {
     if (!selectedGenres.includes(id)) {
-      setSelectedGenres((prev) => [
-        ...prev,
-        {
-          id: id,
-        },
-      ]);
-      return;
+      dispatch({
+        type: "add-id",
+        payload: id,
+      });
     }
     if (selectedGenres.includes(id)) {
-      setSelectedGenres((prev) => prev.filter((item) => item.id !== id));
+      dispatch({
+        type: "remove-id",
+        payload: id,
+      });
     }
   };
 
-  const handleReset = () => {
-    setSelectedGenres([]);
-  };
+  // const handleReset = () => {
+  //   setSelectedGenres([]);
+  // };
 
   useEffect(() => {
     try {
@@ -45,13 +45,25 @@ const Filters = () => {
     }
   }, []);
 
+  const filterReducer = (state, action) => {
+    switch (action.type) {
+      case "add-id": {
+        return [...state, { id: action.payload }];
+      }
+      case "remove-id": {
+        return state.filter((item) => item.id !== action.payload);
+      }
+      default:
+        throw new Error(`${state} ${action.payload}`);
+    }
+  };
   return (
     <>
       <aside className="filters">
         <div className="filters__header">
           <h2>Фильтры</h2>
-          <Button className="btn" onClick={handleReset}>
-            X
+          <Button className="btn">
+            {/* <Button className="btn" onClick={handleReset}></Button> */}X
           </Button>
         </div>
 
