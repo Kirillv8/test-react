@@ -1,35 +1,27 @@
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
+import { filterReducer } from "../model/filterReducer";
+import { GenresContext } from "../model/FilterProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
-
   const [popularity, setPopularity] = useState("");
-
   const [rating, setRating] = useState("");
+  const [selectedGenres, dispatch] = useReducer(filterReducer, []);
 
-  const [selectedGenres, setSelectedGenres] = useState([]);
+  // const selectedGenres = useContext(GenresContext);
 
   const toggle = (id) => {
-    if (!selectedGenres.includes(id)) {
-      setSelectedGenres((prev) => [
-        ...prev,
-        {
-          id: id,
-        },
-      ]);
-      return;
-    }
-    if (selectedGenres.includes(id)) {
-      setSelectedGenres((prev) => prev.filter((item) => item.id !== id));
-    }
-  };
+    const isSelected = selectedGenres.some((item) => item.id === id);
 
-  const handleReset = () => {
-    setSelectedGenres([]);
+    if (isSelected) {
+      dispatch({ type: "remove-id", payload: id });
+    } else {
+      dispatch({ type: "add-id", payload: id });
+    }
   };
 
   useEffect(() => {
@@ -50,7 +42,8 @@ const Filters = () => {
       <aside className="filters">
         <div className="filters__header">
           <h2>Фильтры</h2>
-          <Button className="btn" onClick={handleReset}>
+
+          <Button className="btn" onClick={() => dispatch({ type: "reset" })}>
             X
           </Button>
         </div>
