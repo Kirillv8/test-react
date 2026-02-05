@@ -15,23 +15,14 @@ const Filters = () => {
   // const selectedGenres = useContext(GenresContext);
 
   const toggle = (id) => {
-    if (!selectedGenres.includes(id)) {
-      dispatch({
-        type: "add-id",
-        payload: id,
-      });
-    }
-    if (selectedGenres.some((item) => item === id)) {
-      dispatch({
-        type: "remove-id",
-        payload: id,
-      });
+    const isSelected = selectedGenres.some((item) => item.id === id);
+
+    if (isSelected) {
+      dispatch({ type: "remove-id", payload: id });
+    } else {
+      dispatch({ type: "add-id", payload: id });
     }
   };
-
-  // const handleReset = () => {
-  //   setSelectedGenres([]);
-  // };
 
   useEffect(() => {
     try {
@@ -51,8 +42,9 @@ const Filters = () => {
       <aside className="filters">
         <div className="filters__header">
           <h2>Фильтры</h2>
-          <Button className="btn">
-            {/* <Button className="btn" onClick={handleReset}></Button> */}X
+
+          <Button className="btn" onClick={() => dispatch({ type: "reset" })}>
+            X
           </Button>
         </div>
 
@@ -119,4 +111,3 @@ const Filters = () => {
 };
 
 export default Filters;
- 
