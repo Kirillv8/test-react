@@ -3,6 +3,7 @@ import Input from "@shared/ui/input/Input";
 import { useState, useEffect, useReducer } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
+import { filterReducer } from "../model/filterReducer";
 import { GenresContext } from "../model/FilterProvider";
 
 const Filters = () => {
@@ -20,7 +21,7 @@ const Filters = () => {
         payload: id,
       });
     }
-    if (selectedGenres.includes(id)) {
+    if (selectedGenres.some((item) => item === id)) {
       dispatch({
         type: "remove-id",
         payload: id,
@@ -45,18 +46,6 @@ const Filters = () => {
     }
   }, []);
 
-  const filterReducer = (state, action) => {
-    switch (action.type) {
-      case "add-id": {
-        return [...state, { id: action.payload }];
-      }
-      case "remove-id": {
-        return state.filter((item) => item.id !== action.payload);
-      }
-      default:
-        throw new Error(`${state} ${action.payload}`);
-    }
-  };
   return (
     <>
       <aside className="filters">
@@ -130,3 +119,4 @@ const Filters = () => {
 };
 
 export default Filters;
+ 
