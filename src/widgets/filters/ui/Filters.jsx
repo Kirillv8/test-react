@@ -1,10 +1,10 @@
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
-import { useState, useEffect, useReducer } from "react";
+import { useState, useEffect, useReducer, useContext } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
 import { filterReducer } from "../model/filterReducer";
-import { GenresContext } from "../model/FilterProvider";
+import { UserContext } from "@shared/provider/UserProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
@@ -13,6 +13,7 @@ const Filters = () => {
   const [selectedGenres, dispatch] = useReducer(filterReducer, []);
 
   // const selectedGenres = useContext(GenresContext);
+  const TOKEN = useContext(UserContext);
 
   const toggle = (id) => {
     const isSelected = selectedGenres.some((item) => item.id === id);
