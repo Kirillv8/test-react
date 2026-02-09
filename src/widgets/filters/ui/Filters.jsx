@@ -1,18 +1,18 @@
 import Button from "@shared/ui/button/Button";
 import Input from "@shared/ui/input/Input";
-import { useState, useEffect, useReducer, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
-import { filterReducer } from "../model/filterReducer";
 import { UserContext } from "@shared/provider/UserProvider";
+import { GenresContext, ReducerContext } from "../model/FilterProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
   const [popularity, setPopularity] = useState("");
   const [rating, setRating] = useState("");
-  const [selectedGenres, dispatch] = useReducer(filterReducer, []);
 
-  // const selectedGenres = useContext(GenresContext);
+  const selectedGenres = useContext(GenresContext);
+  const dispatch = useContext(ReducerContext);
   const TOKEN = useContext(UserContext);
 
   const toggle = (id) => {
