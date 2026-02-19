@@ -1,5 +1,5 @@
 import Button from "@shared/ui/button/Button";
-import Input from "@shared/ui/input/Input";
+import { Autocomplete, TextField } from "@mui/material";
 import { useState, useEffect, useContext } from "react";
 import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
@@ -14,16 +14,6 @@ const Filters = () => {
   const selectedGenres = useContext(GenresContext);
   const dispatch = useContext(ReducerContext);
   const TOKEN = useContext(UserContext);
-
-  const toggle = (id) => {
-    const isSelected = selectedGenres.some((item) => item.id === id);
-
-    if (isSelected) {
-      dispatch({ type: "remove-id", payload: id });
-    } else {
-      dispatch({ type: "add-id", payload: id });
-    }
-  };
 
   useEffect(() => {
     try {
@@ -75,36 +65,27 @@ const Filters = () => {
 
         <div className="filters__section">
           <h2>Жанры</h2>
-          <div
-            className="genres-list"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              marginTop: "10px",
+          <Autocomplete
+            multiple
+            options={genres}
+            getOptionLabel={(option) => option.name}
+            disableCloseOnSelect
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            value={selectedGenres}
+            onChange={(event, newValue) => {
+              dispatch({
+                type: "SET_GENRES",
+                payload: newValue,
+              });
             }}
-          >
-            {genres.map((genre) => (
-              <label
-                key={genre.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: "pointer",
-                }}
-              >
-                <Input
-                  type="checkbox"
-                  checked={selectedGenres.some((item) => item.id === genre.id)}
-                  onChange={() => toggle(genre.id)}
-                />
-                <span style={{ color: "white", fontSize: "14px" }}>
-                  {genre.name}
-                </span>
-              </label>
-            ))}
-          </div>
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Выберите жанры"
+                variant="standard"
+              />
+            )}
+          />
         </div>
       </aside>
     </>
