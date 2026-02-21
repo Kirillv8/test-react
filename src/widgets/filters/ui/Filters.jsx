@@ -62,7 +62,7 @@ const Filters = () => {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center",
+              alignItems: "center", 
               mb: 2,
               height: "40px",
             }}
