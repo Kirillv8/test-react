@@ -1,29 +1,24 @@
 import Button from "@shared/ui/button/Button";
-import Input from "@shared/ui/input/Input";
+import {
+  Autocomplete,
+  TextField,
+  Paper,
+  Typography,
+  MenuItem,
+  Stack,
+  Box,
+} from "@mui/material";
+
 import { useState, useEffect, useContext } from "react";
-import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
 import { UserContext } from "@shared/provider/UserProvider";
 import { GenresContext, ReducerContext } from "../model/FilterProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
-  const [popularity, setPopularity] = useState("");
-  const [rating, setRating] = useState("");
-
-  const selectedGenres = useContext(GenresContext);
+  const { genre, sortBy } = useContext(GenresContext);
   const dispatch = useContext(ReducerContext);
   const TOKEN = useContext(UserContext);
-
-  const toggle = (id) => {
-    const isSelected = selectedGenres.some((item) => item.id === id);
-
-    if (isSelected) {
-      dispatch({ type: "remove-id", payload: id });
-    } else {
-      dispatch({ type: "add-id", payload: id });
-    }
-  };
 
   useEffect(() => {
     try {
@@ -40,73 +35,100 @@ const Filters = () => {
 
   return (
     <>
-      <aside className="filters">
-        <div className="filters__header">
-          <h2>Фильтры</h2>
+      <Paper
+        elevation={3}
+        sx={{
+          p: 3,
+          backgroundColor: "#121212",
+          color: "#fff",
+          borderRadius: 2,
+          width: "300px",
 
-          <Button className="btn" onClick={() => dispatch({ type: "reset" })}>
-            X
-          </Button>
-        </div>
-
-        <div className="filters__section">
-          <label>Сортировать по:</label>
-          <br />
-          <br />
-          <select
-            className="filters__select"
-            value={popularity}
-            onChange={(e) => setPopularity(e.target.value)}
-          >
-            <option value="">По популярности</option>
-          </select>
-        </div>
-
-        <div className="filters__section">
-          {" "}
-          <select
-            className="filters__select"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          >
-            <option value="">По рейтингу</option>
-          </select>
-        </div>
-
-        <div className="filters__section">
-          <h2>Жанры</h2>
-          <div
-            className="genres-list"
-            style={{
+          "& .MuiInputLabel-root": { color: "rgba(255, 255, 255, 0.7)" },
+          "& .MuiInputBase-root": { color: "#fff" },
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "rgba(255, 255, 255, 0.3)",
+          },
+          "&:hover .MuiOutlinedInput-notchedOutline": { borderColor: "#fff" },
+          "& .MuiSvgIcon-root": { color: "#fff" },
+        }}
+      >
+        <Stack spacing={3}>
+          <Box
+            sx={{
               display: "flex",
-              flexDirection: "column",
-              gap: "8px",
-              marginTop: "10px",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
+              height: "40px",
             }}
           >
-            {genres.map((genre) => (
-              <label
-                key={genre.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: "pointer",
-                }}
-              >
-                <Input
-                  type="checkbox"
-                  checked={selectedGenres.some((item) => item.id === genre.id)}
-                  onChange={() => toggle(genre.id)}
+            <Typography
+              variant="h5"
+              sx={{
+                lineHeight: 1,
+                m: 0,
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              Фильтры
+            </Typography>
+
+            <Button
+              className="btn"
+              onClick={() => dispatch({ type: "reset" })}
+              style={{
+                minWidth: "40px",
+                height: "40px",
+                margin: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              X
+            </Button>
+          </Box>
+          <TextField
+            select
+            label="Сортировать по"
+            value={sortBy}
+            onChange={(e) =>
+              dispatch({ type: "SET_SORT", payload: e.target.value })
+            }
+            fullWidth
+            sx={{ mb: 2 }}
+          >
+            <MenuItem value="popularity.desc">По популярности:</MenuItem>
+            <MenuItem value="revenue.desc">По рейтингу:</MenuItem>
+          </TextField>
+          <Box>
+            <Typography variant="h5">Жанры</Typography>
+            <Autocomplete
+              multiple
+              options={genres}
+              getOptionLabel={(option) => option.name}
+              disableCloseOnSelect
+              isOptionEqualToValue={(option, value) => option.id === value.id}
+              value={genre}
+              onChange={(event, newValue) => {
+                dispatch({
+                  type: "SET_GENRES",
+                  payload: newValue,
+                });
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="Выберите жанры"
+                  variant="standard"
                 />
-                <span style={{ color: "white", fontSize: "14px" }}>
-                  {genre.name}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-      </aside>
+              )}
+            />
+          </Box>
+        </Stack>
+      </Paper>
     </>
   );
 };
