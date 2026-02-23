@@ -10,17 +10,13 @@ import {
 } from "@mui/material";
 
 import { useState, useEffect, useContext } from "react";
-import "@src/widgets/filters/ui/filter.css";
 import { getGenresApi } from "@shared/api/genres.js";
 import { UserContext } from "@shared/provider/UserProvider";
 import { GenresContext, ReducerContext } from "../model/FilterProvider";
 
 const Filters = () => {
   const [genres, setGenres] = useState([]);
-  const [popularity, setPopularity] = useState("");
-  const [rating, setRating] = useState("");
-
-  const selectedGenres = useContext(GenresContext);
+  const { genre, sortBy } = useContext(GenresContext);
   const dispatch = useContext(ReducerContext);
   const TOKEN = useContext(UserContext);
 
@@ -62,7 +58,7 @@ const Filters = () => {
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              alignItems: "center", 
+              alignItems: "center",
               mb: 2,
               height: "40px",
             }}
@@ -97,8 +93,10 @@ const Filters = () => {
           <TextField
             select
             label="Сортировать по"
-            value={popularity}
-            onChange={(e) => setPopularity(e.target.value)}
+            value={sortBy}
+            onChange={(e) =>
+              dispatch({ type: "SET_SORT", payload: e.target.value })
+            }
             fullWidth
             sx={{ mb: 2 }}
           >
@@ -113,7 +111,7 @@ const Filters = () => {
               getOptionLabel={(option) => option.name}
               disableCloseOnSelect
               isOptionEqualToValue={(option, value) => option.id === value.id}
-              value={selectedGenres}
+              value={genre}
               onChange={(event, newValue) => {
                 dispatch({
                   type: "SET_GENRES",

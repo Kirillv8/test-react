@@ -2,20 +2,9 @@ import Header from "@widgets/header/ui/Header";
 import Filters from "@widgets/filters/ui/Filters";
 import Pagination from "@shared/ui/pagination/Pagination";
 import "@pages/main/ui/mainPage.css";
-
-// import { useEffect } from "react";
-// import { genres } from "@shared/api/genres.js";
+import MovieList from "@widgets/movie-list/ui/MovieList";
 
 const MainPage = () => {
-  // useEffect(() => {
-  //   genres()
-  //     .then((data) => {
-  //       console.log("Получены данные", data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Промис отработал с ошибкой", error);
-  //     });
-  // }, []);
   return (
     <div className="main-page">
       <Header />
@@ -26,11 +15,8 @@ const MainPage = () => {
         <main className="main-page__content">
           <div className="movies-grid-placeholder">
             {/* Сюда мы позже добавим карточки фильмов */}
-            <h1
-            // style={{ color: "white", textAlign: "center", marginTop: "50px" }}
-            >
-              Список фильмов скоро появится...
-            </h1>
+            <MovieList />
+            <h1>Список фильмов скоро появится...</h1>
           </div>
           <div
             className="main-page__pagination"
